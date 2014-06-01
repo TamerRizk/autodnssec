@@ -1,2 +1,2 @@
-0 1 * * 6 root /usr/local/autodnssec/dnssec.sh --re-sign
+0 1 * * 6 root /usr/local/autodnssec/dnssec.sh --re-sign-all
 */20 * * * * root /usr/local/autodnssec/dnssec.sh --check-dnssec
