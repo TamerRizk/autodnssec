@@ -64,9 +64,11 @@ class DNSSec
 
 	def make_sure_named_has_dnssec_enabled!
 		bind_version = `#{@bin['named']} -v`
-		if bind_version.gsub(/^.*?\s/,"").gsub(/\.\d-.*\n/,"").to_f < 9.4
-			abort("dnssec.rb requires BIND 9.4 or newer to function. Please upgrade {bind_version.gsub(/\n/,"")} to something newer...")
+		bind_version = bind_version.gsub(/^.*?\s/,"").gsub(/\.\d-.*\n/,"")
+		if bind_version.to_i < 9 || (bind_version.to_i == 9 && bind_version.gsub(/^9\./,"").gsub(/\..*$/,"").to_i<4)
+			abort("dnssec.rb requires BIND 9.4 or newer to function. Please upgrade #{bind_version.to_s} to something newer...")
 		end
+		
 		unless /dnssec-enable\s*yes/ =~ File.read("#{BIND_PATH}/etc/named.conf")
 			abort("dnssec.rb requires BIND to have DNSSEC enabled. Please enable DNSSEC by adding dnssec-enable yes; to the options part of #{BIND_PATH}/etc/named.conf")
 		end
