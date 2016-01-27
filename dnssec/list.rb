@@ -40,12 +40,12 @@ class DNSSec
 
         UNION ALL
 
-        SELECT domainaliases.name
-        FROM domainaliases
-        INNER JOIN dns_zone ON domainaliases.dns_zone_id = dns_zone.id
+        SELECT domain_aliases.name
+        FROM domain_aliases
+        INNER JOIN dns_zone ON domain_aliases.dns_zone_id = dns_zone.id
         AND dns_zone.status = 0
         AND dns_zone.type = 'master'
-        AND domainaliases.status = 0
+        AND domain_aliases.status = 0
 
         ORDER BY name
       ")
